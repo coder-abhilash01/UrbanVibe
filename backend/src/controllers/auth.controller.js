@@ -21,7 +21,11 @@ const registerController = async (req, res) => {
         })
     
         const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
-        res.cookie("token",token, {httpOnly:true})
+        res.cookie("token",token, {httpOnly:true, 
+        secure: true, 
+        sameSite: "none",
+        
+        })
       res.status(201).json({
         success : true,
         message: "Registration successful"
@@ -53,7 +57,12 @@ const loginController = async (req, res) => {
         message:"Invalid email or password!"
     })}
      const token = jwt.sign({id:user._id, role:user.role, email:user.email, username:user.userName},process.env.JWT_SECRET, {expiresIn:"60m"});
-     res.cookie("token", token , {httpOnly:true})
+     res.cookie("token", token , {
+        httpOnly:true,
+        secure: true, 
+  sameSite: "none",
+
+     })
 
      return res.status(200).json({
         success:true,
@@ -76,7 +85,11 @@ const loginController = async (req, res) => {
 }
 
 const logoutController = async(req,res)=>{
-    res.clearCookie("token")
+    res.clearCookie("token", {
+        httpOnly:true,
+        secure: true, 
+        sameSite: "none",
+    });
     return res.status(200).json({
         success : true,
         message: "Logged out successful!"
