@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom"
 import Admin from "../pages/admin-view/Dashboard"
-import AuthLayout from "@/components/auth/authLayout"
+import AuthLayout from "@/components/auth/AuthLayout"
 import Login from "@/pages/auth/Login"
 import Register from "@/pages/auth/Register"
 import AdminLayout from "@/components/admin-view/Layout"
