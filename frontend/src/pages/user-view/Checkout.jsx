@@ -4,6 +4,7 @@ import Address, { initialAddress } from '@/components/user-view/Address'
 import AddressCard from '@/components/user-view/AddressCard'
 import AddressForm from '@/components/user-view/AddressForm'
 import UserCartItemsContent from '@/components/user-view/UserCartItemsContent'
+import axiosInstance from '@/lib/axios'
 import { fetchAddress } from '@/store/shop/Address.slice'
 import { clearCart } from '@/store/shop/cart.Slice'
 import { createNewOrder } from '@/store/shop/Order.Slice'
@@ -71,8 +72,8 @@ const handleAddAddress = () => {
       handler: async function (response) {
 
         try {
-          const verifyRes = await axios.post(
-            "http://localhost:3000/api/shopping/payment/verify-payment", {
+          const verifyRes = await axiosInstance.post(
+            "/api/shopping/payment/verify-payment", {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
@@ -102,8 +103,8 @@ const handleAddAddress = () => {
       console.log("payment failed")
 
       // ⭐ Update order to failed
-      await axios.post(
-        "http://localhost:3000/api/shopping/payment/order-failed",
+      await axiosInstance.post(
+        "/api/shopping/payment/order-failed",
         {
           orderId: orderId,
           reason: response.error.reason,
