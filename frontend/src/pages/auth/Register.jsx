@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button"
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUserAction } from '@/store/authSlice'
 import { toast } from "sonner"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const dispatch = useDispatch()
+  const navigate =  useNavigate()
     const {isLoading} = useSelector(state=> state.auth)
 
   const [formData, setFormData] = useState({
@@ -23,9 +24,14 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
+
+    if( !formData.userName || !formData.email || !formData.password ){
+      return toast.error("All fields are required")
+    }
     dispatch(registerUserAction(formData)).then((data) => {
       if (data?.payload?.success) {
         toast.success(data.payload.message)
+        navigate("/auth/login")
       } else {
         toast.error(data?.payload?.message)
       }
@@ -39,7 +45,7 @@ const Register = () => {
         <div className="text-center mb-2">
           <h1 className="text-3xl font-semibold">Create account</h1>
           <p className="text-gray-500 text-sm">
-            Join UrbanVibe today
+            Join V-Mart today
           </p>
         </div>
 

@@ -100,7 +100,7 @@ const handleAddAddress = () => {
     const rzp = new window.Razorpay(options);
     rzp.on("payment.failed", async function (response) {
       toast.error("Payment Failed!");
-      console.log("payment failed")
+  
 
       // ⭐ Update order to failed
       await axiosInstance.post(

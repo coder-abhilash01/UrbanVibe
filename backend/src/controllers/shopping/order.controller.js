@@ -295,7 +295,7 @@ const skip = (page-1)*limit
     const totalPages = Math.ceil(totalOrders/limit)
         const orders = await orderModel.find({ userId ,   orderStatus: { $nin: ["cancelled"] }}).sort({ createdAt: -1 }).skip(skip).limit(limit)
 
-        if (!orders) {
+        if (!orders.length) {
             return res.status(404).json({
                 success: false,
                 message: "Order is not available"

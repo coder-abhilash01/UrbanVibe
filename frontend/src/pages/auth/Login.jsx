@@ -24,7 +24,9 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     
-     
+     if( !formData.email || !formData.password ){
+      return toast.error("All fields are required")
+    }
 
     dispatch(loginUserAction(formData))
       .then(data => {

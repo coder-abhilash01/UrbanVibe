@@ -4,47 +4,85 @@ const jwt = require("jsonwebtoken")
 
 
 const registerController = async (req, res) => {
-    const { userName, email, password } = req.body;
-    try {
-        
-        const isUserExists = await userModel.findOne({email});
-        if (isUserExists) {
-            return res.status(409).json(
-                { message: "user already exists" }
-            )
-        };
-        const hashPassword =await bcrypt.hash(password, 10);
-        const user = await userModel.create({
-            userName: userName,
-            email:email,
-            password: hashPassword
-        })
-    
-        const token = jwt.sign({id:user._id}, process.env.JWT_SECRET)
-        res.cookie("token",token, {httpOnly:true, 
-        secure: true, 
-        sameSite: "none",
-        
-        })
-      res.status(201).json({
-        success : true,
-        message: "Registration successful"
-      })
+  const { userName, email, password } = req.body;
 
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({
-            success: false,
-            message: "Some error occured"
-        })
+  try {
+    if (!userName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
     }
 
-}
+    
+   const nameRegex = /^[A-Za-z ]{2,30}$/;
+
+    if (!nameRegex.test(userName)) {
+      return res.status(400).json({
+        success: false,
+        message: "Username must contain only letters",
+      });
+    }
+
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid email format",
+      });
+    }
+
+    
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters",
+      });
+    }
+
+    const isUserExists = await userModel.findOne({ email });
+    if (isUserExists) {
+      return res.status(409).json({
+        success: false,
+        message: "Email already exists",
+      });
+    }
+
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const user = await userModel.create({
+      userName,
+      email,
+      password: hashPassword,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Registration successful",
+    });
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({
+      success: false,
+      message: "Some error occurred",
+    });
+  }
+};
+
 
 
 const loginController = async (req, res) => {
     const { email, password } = req.body;
     try{
+    if (!email || !password) {
+  return res.status(400).json({
+    success: false,
+    message: "All fields are required",
+  });
+}
+
      const user = await userModel.findOne({email});
      if(!user){return res.status(400).json({
         success: false,

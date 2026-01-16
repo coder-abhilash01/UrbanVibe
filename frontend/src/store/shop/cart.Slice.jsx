@@ -66,7 +66,7 @@ const shoppingCartSlice = createSlice({
  state.isLoading = true
         })
         .addCase(addToCart.fulfilled, (state,action)=>{
-              console.log("added", action.payload)
+           
  state.isLoading = false;
  state.cartItems.items = action.payload.data.items
 

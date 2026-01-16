@@ -15,7 +15,7 @@ const UserCartItemsContent = ({ item }) => {
       
       if (res.payload?.success) {
         const userId = user.id
-        console.log(user.id)
+        
         dispatch(fetchCartItems(userId))
         toast.success("Item is deleted successfully")
       }

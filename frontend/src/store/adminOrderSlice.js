@@ -15,7 +15,7 @@ export const getAllUserOrdersForAdmin = createAsyncThunk("admin/orders/getAllUse
 } )
 
 export const updateOrderStatus = createAsyncThunk("admin/orders/updateOrderStatus", async({id,orderStatus})=>{
-    console.log(id, orderStatus)
+   
    const res = await  axiosInstance.put(`/api/admin/orders/update/${id}`, {orderStatus})
      return res.data
 

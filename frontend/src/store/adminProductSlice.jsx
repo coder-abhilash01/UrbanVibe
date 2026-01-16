@@ -23,7 +23,7 @@ export const getAllProducts = createAsyncThunk('/products/getproduct',
   async()=>{
     
      const result = await axiosInstance.get("/api/admin/products/get")
-     console.log(result)
+    
      return result?.data
 
 
@@ -61,12 +61,12 @@ const adminProductsSlice = createSlice({
     })
 
     .addCase(getAllProducts.fulfilled, (state, action)=>{
-      console.log(action.payload)
+    
       state.isLoading = false;
       state.productList = action.payload.data
     })
     .addCase(getAllProducts.rejected, (state,action)=>{
-        console.log("❌ API failed:", action.error)
+   
 
       state.isLoading = false;
        state.productList = []
