@@ -11,7 +11,7 @@ const initialState = {
 export const registerUserAction = createAsyncThunk("auth/register",
     async (formData, { rejectWithValue }) => {
         try {
-            const response = await axios.post("http://localhost:3000/api/auth/register",
+            const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`,
                 formData, { withCredentials: true })
 
             return response.data
