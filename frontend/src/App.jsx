@@ -18,7 +18,17 @@ const App = () => {
 
 
 
-if(isLoading){return <Skeleton className="h-[600px] w-[600px] rounded" />}
+if (isLoading) {
+  return (
+    <div className="min-h-screen p-6 space-y-4">
+      <Skeleton className="h-12 w-full" />   {/* navbar */}
+      <Skeleton className="h-6 w-1/3" />
+      <Skeleton className="h-64 w-full" />
+      <Skeleton className="h-64 w-full" />
+    </div>
+  )
+}
+
   return (
     <div className=''>
       <ScrollToTop/>
