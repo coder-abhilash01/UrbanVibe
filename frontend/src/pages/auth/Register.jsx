@@ -86,7 +86,8 @@ const Register = () => {
           {isLoading ? "Signing up..." : "Sign up"}
         </Button>
   <p className="text-sm text-center">
-          Don’t have an account?{" "}
+          
+          Already have an account?{" "}
           <Link
             to="/auth/login"
             className="font-semibold hover:underline"
